@@ -3,8 +3,8 @@
 
 package com.example.selfmessage;
 
-public final class SelfDescribingMessage2 {
-  private SelfDescribingMessage2() {}
+public final class SelfDescribingMessageHolder {
+  private SelfDescribingMessageHolder() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -171,14 +171,14 @@ public final class SelfDescribingMessage2 {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.example.selfmessage.SelfDescribingMessage2.internal_static_selfmessage_SelfDescribingMessage_descriptor;
+      return com.example.selfmessage.SelfDescribingMessageHolder.internal_static_selfmessage_SelfDescribingMessage_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.example.selfmessage.SelfDescribingMessage2.internal_static_selfmessage_SelfDescribingMessage_fieldAccessorTable
+      return com.example.selfmessage.SelfDescribingMessageHolder.internal_static_selfmessage_SelfDescribingMessage_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.class, com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.Builder.class);
+              com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.class, com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.Builder.class);
     }
 
     private int bitField0_;
@@ -362,10 +362,10 @@ public final class SelfDescribingMessage2 {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage)) {
+      if (!(obj instanceof com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage)) {
         return super.equals(obj);
       }
-      com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage other = (com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage) obj;
+      com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage other = (com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage) obj;
 
       boolean result = true;
       result = result && (hasProtoFiles() == other.hasProtoFiles());
@@ -411,58 +411,58 @@ public final class SelfDescribingMessage2 {
       return hash;
     }
 
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(byte[] data)
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(java.io.InputStream input)
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseDelimitedFrom(java.io.InputStream input)
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseDelimitedFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parseFrom(
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -474,7 +474,7 @@ public final class SelfDescribingMessage2 {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage prototype) {
+    public static Builder newBuilder(com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -494,20 +494,20 @@ public final class SelfDescribingMessage2 {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:selfmessage.SelfDescribingMessage)
-        com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessageOrBuilder {
+        com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.example.selfmessage.SelfDescribingMessage2.internal_static_selfmessage_SelfDescribingMessage_descriptor;
+        return com.example.selfmessage.SelfDescribingMessageHolder.internal_static_selfmessage_SelfDescribingMessage_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.example.selfmessage.SelfDescribingMessage2.internal_static_selfmessage_SelfDescribingMessage_fieldAccessorTable
+        return com.example.selfmessage.SelfDescribingMessageHolder.internal_static_selfmessage_SelfDescribingMessage_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.class, com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.Builder.class);
+                com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.class, com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.Builder.class);
       }
 
-      // Construct using com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.newBuilder()
+      // Construct using com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -540,23 +540,23 @@ public final class SelfDescribingMessage2 {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.example.selfmessage.SelfDescribingMessage2.internal_static_selfmessage_SelfDescribingMessage_descriptor;
+        return com.example.selfmessage.SelfDescribingMessageHolder.internal_static_selfmessage_SelfDescribingMessage_descriptor;
       }
 
-      public com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage getDefaultInstanceForType() {
-        return com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.getDefaultInstance();
+      public com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage getDefaultInstanceForType() {
+        return com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.getDefaultInstance();
       }
 
-      public com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage build() {
-        com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage result = buildPartial();
+      public com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage build() {
+        com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage buildPartial() {
-        com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage result = new com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage(this);
+      public com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage buildPartial() {
+        com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage result = new com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -607,16 +607,16 @@ public final class SelfDescribingMessage2 {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage) {
-          return mergeFrom((com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage)other);
+        if (other instanceof com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage) {
+          return mergeFrom((com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage other) {
-        if (other == com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage other) {
+        if (other == com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage.getDefaultInstance()) return this;
         if (other.hasProtoFiles()) {
           mergeProtoFiles(other.getProtoFiles());
         }
@@ -653,11 +653,11 @@ public final class SelfDescribingMessage2 {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage parsedMessage = null;
+        com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage) e.getUnfinishedMessage();
+          parsedMessage = (com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -993,12 +993,12 @@ public final class SelfDescribingMessage2 {
     }
 
     // @@protoc_insertion_point(class_scope:selfmessage.SelfDescribingMessage)
-    private static final com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage DEFAULT_INSTANCE;
+    private static final com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage();
+      DEFAULT_INSTANCE = new com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage();
     }
 
-    public static com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage getDefaultInstance() {
+    public static com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1021,7 +1021,7 @@ public final class SelfDescribingMessage2 {
       return PARSER;
     }
 
-    public com.example.selfmessage.SelfDescribingMessage2.SelfDescribingMessage getDefaultInstanceForType() {
+    public com.example.selfmessage.SelfDescribingMessageHolder.SelfDescribingMessage getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1045,8 +1045,8 @@ public final class SelfDescribingMessage2 {
       "uf/descriptor.proto\"y\n\025SelfDescribingMes" +
       "sage\0227\n\013proto_files\030\001 \002(\0132\".google.proto" +
       "buf.FileDescriptorSet\022\021\n\ttype_name\030\002 \002(\t" +
-      "\022\024\n\014message_data\030\003 \002(\014B1\n\027com.example.se" +
-      "lfmessageB\026SelfDescribingMessage2"
+      "\022\024\n\014message_data\030\003 \002(\014B6\n\027com.example.se" +
+      "lfmessageB\033SelfDescribingMessageHolder"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
