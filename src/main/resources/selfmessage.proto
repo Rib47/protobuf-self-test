@@ -1,0 +1,16 @@
+syntax="proto2"; 
+package selfmessage;
+
+import "google/protobuf/descriptor.proto";
+
+option java_package = "com.example.selfmessage";
+option java_outer_classname = "SelfDescribingMessageHolder";
+
+message SelfDescribingMessage {
+  // Set of .proto files which define the type.
+  required google.protobuf.FileDescriptorProto proto_descriptor=1;
+
+  // The message data.
+  required bytes message_data=3;
+}
+

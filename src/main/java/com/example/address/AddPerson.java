@@ -1,7 +1,7 @@
 package com.example.address;
 
-import com.example.tutorial.AddressBookProtos.AddressBook;
-import com.example.tutorial.AddressBookProtos.Person;
+import com.example.address.AddressBookProtos.AddressBook;
+import com.example.address.AddressBookProtos.Person;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
