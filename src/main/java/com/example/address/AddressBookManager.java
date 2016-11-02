@@ -5,7 +5,7 @@ import com.example.address.AddressBookProtos.Person;
 
 import java.io.FileInputStream;
 
-class AddressBookManager {
+public class AddressBookManager {
 
 
     // Main function:  Reads the entire address book from a file and prints all

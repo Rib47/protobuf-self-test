@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-class PersonManager {
+public class PersonManager {
 
 
     // Main function:  Reads the entire address book from a file,
