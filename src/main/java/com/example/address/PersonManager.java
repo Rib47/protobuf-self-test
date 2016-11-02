@@ -11,9 +11,44 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-class AddPerson {
+class PersonManager {
+
+
+    // Main function:  Reads the entire address book from a file,
+    //   adds one person based on user input, then writes it back out to the same
+    //   file.
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.err.println("Usage:  PersonManager ADDRESS_BOOK_FILE");
+            System.exit(-1);
+        }
+
+        addPersonToAddressBook(args[0]);
+    }
+
+    static public void addPersonToAddressBook(String filename) throws Exception {
+        AddressBook.Builder addressBook = AddressBook.newBuilder();
+
+        // Read the existing address book.
+        try {
+            InputStream in = new FileInputStream(filename);
+            addressBook.mergeFrom(in, null);
+        } catch (FileNotFoundException e) {
+            System.out.println(filename + ": File not found.  Creating a new file.");
+        }
+
+        // Add an address.
+        addressBook.addPerson(PromptForAddress(new BufferedReader(new InputStreamReader(System.in)),
+                System.out));
+
+        // Write the new address book back to disk.
+        FileOutputStream output = new FileOutputStream(filename);
+        addressBook.build().writeTo(output);
+        output.close();
+    }
+
     // This function fills in a Person message based on user input.
-    static Person PromptForAddress(BufferedReader stdin,
+    private static Person PromptForAddress(BufferedReader stdin,
                                    PrintStream stdout) throws IOException {
         Person.Builder person = Person.newBuilder();
 
@@ -55,35 +90,5 @@ class AddPerson {
         }
 
         return person.build();
-    }
-
-    // Main function:  Reads the entire address book from a file,
-    //   adds one person based on user input, then writes it back out to the same
-    //   file.
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage:  AddPerson ADDRESS_BOOK_FILE");
-            System.exit(-1);
-        }
-
-        AddressBook.Builder addressBook = AddressBook.newBuilder();
-
-        // Read the existing address book.
-        try {
-            InputStream in = new FileInputStream(args[0]);
-            addressBook.mergeFrom(in, null);
-        } catch (FileNotFoundException e) {
-            System.out.println(args[0] + ": File not found.  Creating a new file.");
-        }
-
-        // Add an address.
-        addressBook.addPerson(
-                PromptForAddress(new BufferedReader(new InputStreamReader(System.in)),
-                        System.out));
-
-        // Write the new address book back to disk.
-        FileOutputStream output = new FileOutputStream(args[0]);
-        addressBook.build().writeTo(output);
-        output.close();
     }
 }

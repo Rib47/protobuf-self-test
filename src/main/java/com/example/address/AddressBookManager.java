@@ -5,9 +5,29 @@ import com.example.address.AddressBookProtos.Person;
 
 import java.io.FileInputStream;
 
-class ListPeople {
+class AddressBookManager {
+
+
+    // Main function:  Reads the entire address book from a file and prints all
+    //   the information inside.
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            System.err.println("Usage:  AddressBookManager ADDRESS_BOOK_FILE");
+            System.exit(-1);
+        }
+
+        AddressBook addressBook = readFromFile(args[0]);
+
+        print(addressBook);
+    }
+
+    public static AddressBook readFromFile(String filename) throws Exception {
+        // Read the existing address book.
+        return AddressBook.parseFrom(new FileInputStream(filename));
+    }
+
     // Iterates though all people in the AddressBook and prints info about them.
-    static void Print(AddressBook addressBook) {
+    public static void print(AddressBook addressBook) {
         for (Person person: addressBook.getPersonList()) {
             System.out.println("Person ID: " + person.getId());
             System.out.println("  Name: " + person.getName());
@@ -30,20 +50,5 @@ class ListPeople {
                 System.out.println(phoneNumber.getNumber());
             }
         }
-    }
-
-    // Main function:  Reads the entire address book from a file and prints all
-    //   the information inside.
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage:  ListPeople ADDRESS_BOOK_FILE");
-            System.exit(-1);
-        }
-
-        // Read the existing address book.
-        AddressBook addressBook =
-                AddressBook.parseFrom(new FileInputStream(args[0]));
-
-        Print(addressBook);
     }
 }
