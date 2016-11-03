@@ -2,10 +2,12 @@ package com.example;
 
 import com.example.address.AddressBookManager;
 import com.example.address.AddressBookProtos.AddressBook;
+import com.example.selfmessage.SelfDescribingMessageHolder;
 import com.example.selfmessage.SelfDescribingMessageManager;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.DynamicMessage;
@@ -13,6 +15,7 @@ import com.google.protobuf.DynamicMessage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 public class SelfDescribingMessageDemo {
 
@@ -22,7 +25,7 @@ public class SelfDescribingMessageDemo {
 
     public static void main(String[] args) throws Exception {
 
-        // TODO: write SD-message to file
+        // write SD-message to file
         System.out.print("Reading address book from file \"" + SOURCE_BOOK_FILENAME +"\" ... ");
         AddressBook book = AddressBookManager.readFromFile(SOURCE_BOOK_FILENAME);
         System.out.println("Done.");
@@ -40,10 +43,25 @@ public class SelfDescribingMessageDemo {
         SelfDescribingMessageManager.saveSdMessage(descriptorSet, book.toByteArray(), MESSAGE_FILENAME);
         System.out.println();
 
-        // TODO: read SD-message from file
+        // read SD-message from file
         System.out.print("Reading self-describing message from file \"" + MESSAGE_FILENAME +"\" as DynamicMessage ... ");
-        DynamicMessage message = SelfDescribingMessageManager.readDynamicMessageFromFile(MESSAGE_FILENAME);
+        // DynamicMessage message = SelfDescribingMessageManager.readDynamicMessageFromFile(MESSAGE_FILENAME);
+        SelfDescribingMessageHolder.SelfDescribingMessage sdMessage =  SelfDescribingMessageManager.readFromFile(MESSAGE_FILENAME);
+        FileDescriptorSet fdSet = sdMessage.getDescriptorSet();
+        DynamicMessage message = SelfDescribingMessageManager.convertToDynamicMessage(sdMessage);
+
         System.out.println("\n Dynamic message:\n" + message);
+
+        // test lab
+        Map<FieldDescriptor, Object> allFields = message.getAllFields();
+        System.out.println("\n Field descriptors list:\n");
+
+        // TODO: see - com.google.protobuf.TextFormat.Printer.print()
+        for (FieldDescriptor fieldDesc: allFields.keySet()) {
+            System.out.println("Field: " + fieldDesc);
+            DynamicMessage field = (DynamicMessage) allFields.get(fieldDesc);
+            System.out.println(field);
+        }
     }
 
     private static DynamicMessage getAddressBookFromFile(String filename) throws IOException, DescriptorValidationException {
