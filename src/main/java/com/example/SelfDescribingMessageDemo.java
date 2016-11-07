@@ -5,6 +5,7 @@ import com.example.address.AddressBookProtos.AddressBook;
 import com.example.selfmessage.SelfDescribingMessageHolder;
 import com.example.selfmessage.SelfDescribingMessageManager;
 import com.google.protobuf.AbstractParser;
+import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -12,47 +13,64 @@ import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.DynamicMessage;
+import com.google.protobuf.ExtensionRegistryLite;
+import com.google.protobuf.InvalidProtocolBufferException;
+import io.protostuff.parser.Proto;
+import io.protostuff.parser.ProtoUtil;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.TokenStream;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Map;
 
 public class SelfDescribingMessageDemo {
 
     private static final String SOURCE_BOOK_FILENAME = "test.ab";
     private static final String ADDRESS_BOOK_DESCRIPTOR_FILENAME = File.separator + "address.desc";
-    private static final String ADDRESS_BOOK_PROTO_FILE = File.separator + "address.proto";
+    private static final String ADDRESS_BOOK_PROTO_FILE = "src/main/resources/address.proto";
     private static final String MESSAGE_FILENAME = "message.data";
 
     public static void main(String[] args) throws Exception {
 
-        DynamicMessage message = testSelfDescribingMessage();
+        // DynamicMessage message = testSelfDescribingMessage();
 
         validateProto(ADDRESS_BOOK_PROTO_FILE);
 
-
         // *** TEST LAB  ***
 
-        Map<FieldDescriptor, Object> allFields = message.getAllFields();
-        System.out.println("\n Field descriptors list:\n");
-
-        // TODO: see - com.google.protobuf.TextFormat.Printer.print()
-        for (FieldDescriptor fieldDesc: allFields.keySet()) {
-            System.out.println("Field: " + fieldDesc);
-            DynamicMessage field = (DynamicMessage) allFields.get(fieldDesc);
-            System.out.println(field);
-        }
+//        Map<FieldDescriptor, Object> allFields = message.getAllFields();
+//        System.out.println("\n Field descriptors list:\n");
+//
+//        // TODO: see - com.google.protobuf.TextFormat.Printer.print()
+//        for (FieldDescriptor fieldDesc: allFields.keySet()) {
+//            System.out.println("Field: " + fieldDesc);
+//            DynamicMessage field = (DynamicMessage) allFields.get(fieldDesc);
+//            System.out.println(field);
+//        }
     }
 
     private static void validateProto(String filename) throws IOException, DescriptorValidationException{
-        com.google.protobuf.AbstractParser protoBufParser = new com.google.protobuf.AbstractParser();
-        io.protostuff.parser.AbstractParser protoStuffParser = new io.protostuff.parser.AbstractParser();
 
-        // TODO: parse *.proto file
+        File f = new File(filename);
 
+        // Create a stream to hold the output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        PrintStream old = System.err;
+        System.setErr(ps);
 
+        // parse *.proto
+        Proto proto = ProtoUtil.parseProto(f);
 
+        System.out.flush();
+        System.setErr(old);
+
+        // Show any errors/warnings was happen in parsing process
+        System.out.println("\nParser output is: \n" + baos.toString());
     }
 
     private static DynamicMessage testSelfDescribingMessage() throws IOException, DescriptorValidationException{
