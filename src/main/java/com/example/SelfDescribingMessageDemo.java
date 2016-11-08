@@ -20,10 +20,12 @@ import io.protostuff.parser.ProtoUtil;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.TokenStream;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Map;
 
@@ -36,9 +38,16 @@ public class SelfDescribingMessageDemo {
 
     public static void main(String[] args) throws Exception {
 
-        // DynamicMessage message = testSelfDescribingMessage();
+//        DynamicMessage message = testSelfDescribingMessage();
 
-        validateProto(ADDRESS_BOOK_PROTO_FILE);
+//        validateProto(ADDRESS_BOOK_PROTO_FILE);
+
+        String result = validateProtoWithCompiler(ADDRESS_BOOK_PROTO_FILE);
+        if (result.length() == 0) {
+            System.out.println("Validation success!");
+        } else {
+            System.out.println("Validation failed. Errors: \n" + result);
+        }
 
         // *** TEST LAB  ***
 
@@ -53,6 +62,34 @@ public class SelfDescribingMessageDemo {
 //        }
     }
 
+    private static String validateProtoWithCompiler(String fileName) throws IOException, DescriptorValidationException {
+        StringBuilder resultBuilder = new StringBuilder();
+
+        String execName = "./protoc";
+        String outputDir = "--java_out=./";
+
+        String dependencyDir   = "-I=./";
+
+        try {
+            String line;
+            ProcessBuilder pb = new ProcessBuilder(execName, dependencyDir,outputDir, fileName);
+            Map<String, String> env = pb.environment();
+            pb.redirectErrorStream(true);
+
+            Process p = pb.start();
+            p.waitFor();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((line = br.readLine()) != null) {
+                resultBuilder.append(line).append("\n");
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+            return err.getMessage();
+        }
+        return resultBuilder.toString();
+    }
+
     private static void validateProto(String filename) throws IOException, DescriptorValidationException{
 
         File f = new File(filename);
@@ -63,8 +100,12 @@ public class SelfDescribingMessageDemo {
         PrintStream old = System.err;
         System.setErr(ps);
 
-        // parse *.proto
-        Proto proto = ProtoUtil.parseProto(f);
+        try {
+            Proto proto = ProtoUtil.parseProto(f);
+        } catch(Exception e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
         System.out.flush();
         System.setErr(old);
