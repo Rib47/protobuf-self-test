@@ -1,0 +1,12 @@
+syntax="proto2";
+package com.example.address;
+
+option java_package = "com.example.address";
+// option java_outer_classname = "PhoneTypeProto";
+option java_outer_classname = "PhoneTypeProto";
+
+enum PhoneType {
+  MOBILE = 0;
+  HOME = 1;
+  WORK = 2;
+}

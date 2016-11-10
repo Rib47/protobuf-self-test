@@ -1,0 +1,27 @@
+syntax="proto2";
+package address;
+
+option java_package = "com.example.address";
+option java_outer_classname = "AddressBookProtos2";
+
+message Person {
+  required string name = 1;
+  optional string email = 2;
+
+  oneof is_age_present {
+     int32 age = 3 [default = 18];
+  }
+
+  repeated int32 phone = 4;
+
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+}
+
+message AddressBook {
+  repeated Person person = 1;
+}

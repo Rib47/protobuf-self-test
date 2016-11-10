@@ -1,24 +1,17 @@
 package com.example;
 
 import com.example.address.AddressBookManager;
-import com.example.address.AddressBookProtos.AddressBook;
+import com.example.address.AddressBookProto.AddressBook;
 import com.example.selfmessage.SelfDescribingMessageHolder;
 import com.example.selfmessage.SelfDescribingMessageManager;
-import com.google.protobuf.AbstractParser;
-import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.Descriptors.Descriptor;
-import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.DynamicMessage;
-import com.google.protobuf.ExtensionRegistryLite;
-import com.google.protobuf.InvalidProtocolBufferException;
 import io.protostuff.parser.Proto;
 import io.protostuff.parser.ProtoUtil;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.TokenStream;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -27,27 +20,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Map;
 
 public class SelfDescribingMessageDemo {
 
-    private static final String SOURCE_BOOK_FILENAME = "test.ab";
-    private static final String ADDRESS_BOOK_DESCRIPTOR_FILENAME = File.separator + "address.desc";
+    private static final String ADDRESS_BOOK_FILENAME = AddressBookManager.DEFAULT_ADDRESS_BOOK_FILE;
+    private static final String ADDRESS_BOOK_DESCRIPTOR_FILENAME = File.separator + "address.descr";
     private static final String ADDRESS_BOOK_PROTO_FILE = "src/main/resources/address.proto";
+    private static final String ADDRESS_BOOK_PROTO2_FILE = "src/main/resources/address_mini_proto2.proto";
+    private static final String ADDRESS_BOOK_PROTO3_FILE = "src/main/resources/address_mini_proto3.proto";
+    private static final String ADDRESS_BOOK_DESC_FILE = "src/main/resources/address.descr";
+    private static final String OUT_DIR_PROTO = "target_proto";
     private static final String MESSAGE_FILENAME = "message.data";
+    private static final String PROTO_COMPILER = "./protoc";
 
     public static void main(String[] args) throws Exception {
 
-//        DynamicMessage message = testSelfDescribingMessage();
+        DynamicMessage message = testSelfDescribingMessage();
 
-//        validateProto(ADDRESS_BOOK_PROTO_FILE);
+//        validateProtoWithProtoStuff(ADDRESS_BOOK_PROTO2_FILE);
 
-        String result = validateProtoWithCompiler(ADDRESS_BOOK_PROTO_FILE);
-        if (result.length() == 0) {
-            System.out.println("Validation success!");
-        } else {
-            System.out.println("Validation failed. Errors: \n" + result);
-        }
+//        System.out.println("\nValidating proto2 file ...");
+//        String result = validateProtoWithCompiler(ADDRESS_BOOK_PROTO_FILE, OUT_DIR_PROTO);
+//        displayValidationResult(result);
+
+//        System.out.println("\nValidating proto3 file ...");
+//        String result3 = validateProtoWithCompiler(ADDRESS_BOOK_PROTO3_FILE, OUT_DIR_PROTO);
+//        displayValidationResult(result3);
+
 
         // *** TEST LAB  ***
 
@@ -62,17 +63,26 @@ public class SelfDescribingMessageDemo {
 //        }
     }
 
-    private static String validateProtoWithCompiler(String fileName) throws IOException, DescriptorValidationException {
+    private static void displayValidationResult(String result) {
+        if (result.length() == 0) {
+            System.out.println("Validation success!");
+        } else {
+            System.out.println("Validation failed. Errors: \n" + result);
+        }
+    }
+
+    private static String validateProtoWithCompiler(String fileName, String outputFolder) throws IOException, DescriptorValidationException {
         StringBuilder resultBuilder = new StringBuilder();
 
-        String execName = "./protoc";
-        String outputDir = "--java_out=./";
+        new File(outputFolder).mkdirs();
 
+        String outputDir = "--java_out=./" + outputFolder;
+        String descriptorOutput = "--descriptor_set_out=" + ADDRESS_BOOK_DESC_FILE;
         String dependencyDir   = "-I=./";
 
         try {
             String line;
-            ProcessBuilder pb = new ProcessBuilder(execName, dependencyDir,outputDir, fileName);
+            ProcessBuilder pb = new ProcessBuilder(PROTO_COMPILER, dependencyDir, outputDir, descriptorOutput, fileName);
             Map<String, String> env = pb.environment();
             pb.redirectErrorStream(true);
 
@@ -90,7 +100,7 @@ public class SelfDescribingMessageDemo {
         return resultBuilder.toString();
     }
 
-    private static void validateProto(String filename) throws IOException, DescriptorValidationException{
+    private static void validateProtoWithProtoStuff(String filename) throws IOException, DescriptorValidationException{
 
         File f = new File(filename);
 
@@ -117,10 +127,10 @@ public class SelfDescribingMessageDemo {
     private static DynamicMessage testSelfDescribingMessage() throws IOException, DescriptorValidationException{
 
         // write SD-message to file
-        System.out.print("Reading address book from file \"" + SOURCE_BOOK_FILENAME +"\" ... ");
-        AddressBook book = AddressBookManager.readFromFile(SOURCE_BOOK_FILENAME);
+        System.out.print("Reading address book from file \"" + ADDRESS_BOOK_FILENAME +"\" ... ");
+        AddressBook book = AddressBookManager.readFromFile(ADDRESS_BOOK_FILENAME);
         System.out.println("Done.");
-        System.out.println("Address book: \n" + book);
+        System.out.println("Address book: \n" + book.toString());
         System.out.println();
 
         System.out.print("Reading descriptor set from file \"" + ADDRESS_BOOK_DESCRIPTOR_FILENAME +"\" ... ");
@@ -136,12 +146,18 @@ public class SelfDescribingMessageDemo {
 
         // read SD-message from file
         System.out.print("Reading self-describing message from file \"" + MESSAGE_FILENAME +"\" as DynamicMessage ... ");
-        // DynamicMessage message = SelfDescribingMessageManager.readDynamicMessageFromFile(MESSAGE_FILENAME);
         SelfDescribingMessageHolder.SelfDescribingMessage sdMessage =  SelfDescribingMessageManager.readFromFile(MESSAGE_FILENAME);
         FileDescriptorSet fdSet = sdMessage.getDescriptorSet();
         DynamicMessage message = SelfDescribingMessageManager.convertToDynamicMessage(sdMessage);
-
         System.out.println("\n Dynamic message:\n" + message);
+
+        // message analyzing
+        List<DynamicMessage> personList = (List<DynamicMessage>) message.getAllFields().entrySet().iterator().next().getValue();
+        System.out.println("\n Persons:\n" + personList);
+        for (DynamicMessage person: personList) {
+            System.out.println("Person fields:\n" + person.getAllFields());
+        }
+
 
         return message;
     }

@@ -1,7 +1,7 @@
 package com.example.address;
 
-import com.example.address.AddressBookProtos.AddressBook;
-import com.example.address.AddressBookProtos.Person;
+import com.example.address.AddressBookProto.AddressBook;
+import com.example.address.PersonProto.Person;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -13,6 +13,16 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 public final class AddressBookManager {
+
+    public static final String DEFAULT_ADDRESS_BOOK_FILE = "test.ab";
+
+    public static void main(String[] args)  throws Exception {
+        while (true) {
+            addPersonToAddressBook(DEFAULT_ADDRESS_BOOK_FILE);
+            System.out.println("\n Person added. Go to next person ...");
+            System.out.println("(kill program to finish)\n");
+        }
+    }
 
     public static AddressBook readFromFile(String filename) throws IOException {
         // Read the existing address book.
@@ -38,6 +48,7 @@ public final class AddressBookManager {
         FileOutputStream output = new FileOutputStream(filename);
         addressBookBuilder.build().writeTo(output);
         output.close();
+        System.out.println("Person added successfully.");
     }
 
     // This function fills in a Person message based on user input.
@@ -52,7 +63,7 @@ public final class AddressBookManager {
         person.setName(stdin.readLine());
 
         stdout.print("Enter email address (blank for none): ");
-        String email = stdin.readLine();
+        String email = stdin.readLine().trim();
         if (email.length() > 0) {
             person.setEmail(email);
         }
@@ -70,11 +81,11 @@ public final class AddressBookManager {
             stdout.print("Is this a mobile, home, or work phone? ");
             String type = stdin.readLine();
             if (type.equals("mobile")) {
-                phoneNumber.setType(Person.PhoneType.MOBILE);
+                phoneNumber.setType(PhoneTypeProto.PhoneType.MOBILE);
             } else if (type.equals("home")) {
-                phoneNumber.setType(Person.PhoneType.HOME);
+                phoneNumber.setType(PhoneTypeProto.PhoneType.HOME);
             } else if (type.equals("work")) {
-                phoneNumber.setType(Person.PhoneType.WORK);
+                phoneNumber.setType(PhoneTypeProto.PhoneType.WORK);
             } else {
                 stdout.println("Unknown phone type.  Using default.");
             }

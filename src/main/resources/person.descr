@@ -1,0 +1,13 @@
+
+Ö
+person.protocom.example.addressphone_type.proto"ú
+Person
+name (	Rname
+id (Rid
+email (	:mailRemail
+sex (	Rsex=
+phone (2'.com.example.address.Person.PhoneNumberRphone_
+PhoneNumber
+number (	Rnumber8
+type (2.com.example.address.PhoneType:HOMERtypeB"
+com.example.addressBPersonProto
