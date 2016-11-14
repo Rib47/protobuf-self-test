@@ -148,18 +148,19 @@ public class SelfDescribingMessageDemo {
         System.out.print("Reading self-describing message from file \"" + MESSAGE_FILENAME +"\" as DynamicMessage ... ");
         SelfDescribingMessageHolder.SelfDescribingMessage sdMessage =  SelfDescribingMessageManager.readFromFile(MESSAGE_FILENAME);
         FileDescriptorSet fdSet = sdMessage.getDescriptorSet();
-        DynamicMessage message = SelfDescribingMessageManager.convertToDynamicMessage(sdMessage);
-        System.out.println("\n Dynamic message:\n" + message);
+
+        DynamicMessage messageTree = SelfDescribingMessageManager.convertToDynamicMessageWithFullDependencyTree(sdMessage);
+        System.out.println("\n Dynamic message (full tree dependencies):\n" + messageTree);
 
         // message analyzing
-        List<DynamicMessage> personList = (List<DynamicMessage>) message.getAllFields().entrySet().iterator().next().getValue();
+        List<DynamicMessage> personList = (List<DynamicMessage>) messageTree.getAllFields().entrySet().iterator().next().getValue();
         System.out.println("\n Persons:\n" + personList);
         for (DynamicMessage person: personList) {
             System.out.println("Person fields:\n" + person.getAllFields());
         }
 
 
-        return message;
+        return messageFlat;
     }
 
     private static DynamicMessage getAddressBookFromFile(String filename) throws IOException, DescriptorValidationException {
